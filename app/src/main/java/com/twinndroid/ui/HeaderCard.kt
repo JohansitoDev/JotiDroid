@@ -90,7 +90,7 @@ fun HomeHeader(
             HeaderPill(hs, onGradient, Modifier) {
                 Column(Modifier.padding(horizontal = if (hs.pills) 14.dp else 4.dp, vertical = if (hs.pills) 6.dp else 0.dp)) {
                     val res = androidx.compose.ui.platform.LocalContext.current.resources
-                    Text("TwinnDroid", style = MaterialTheme.typography.headlineMedium, color = contentColor)
+                    Text(stringResource(R.string.app_name), style = MaterialTheme.typography.headlineMedium, color = contentColor)
                     Text(
                         buildString {
                             append(res.getQuantityString(R.plurals.clone_count, count, count))

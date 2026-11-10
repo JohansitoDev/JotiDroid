@@ -157,26 +157,20 @@ fun EditorScreen(vm: MainViewModel) {
             if (state.isNew) {
                 TwinnCard {
                     Column(Modifier.fillMaxWidth().padding(16.dp)) {
-                        Text("Cantidad de clones", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                        Spacer(Modifier.height(8.dp))
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                            Column(Modifier.weight(1f)) {
-                                Text("Instalar múltiples clones")
-                                Text("Crea e instala automáticamente la cantidad elegida para usar cuentas distintas.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                            Spacer(Modifier.width(12.dp))
-                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                OutlinedButton(
-                                    onClick = { if (state.quantity > 1) vm.setEditorQuantity(state.quantity - 1) },
-                                    modifier = Modifier.size(40.dp),
-                                ) { Text("-") }
-                                Text("${state.quantity}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
-                                OutlinedButton(
-                                    onClick = { if (state.quantity < 10) vm.setEditorQuantity(state.quantity + 1) },
-                                    modifier = Modifier.size(40.dp),
-                                ) { Text("+") }
-                            }
+                            Text("Cantidad de clones", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                            Text("${state.quantity}", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
                         }
+                        Spacer(Modifier.height(4.dp))
+                        Text("Crea e instala automáticamente la cantidad elegida (hasta 50) para usar múltiples cuentas.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Spacer(Modifier.height(8.dp))
+                        Slider(
+                            value = state.quantity.toFloat(),
+                            onValueChange = { vm.setEditorQuantity(it.toInt()) },
+                            valueRange = 1f..50f,
+                            steps = 48,
+                            modifier = Modifier.fillMaxWidth(),
+                        )
                     }
                 }
             }

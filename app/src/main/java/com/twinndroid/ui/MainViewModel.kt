@@ -253,7 +253,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setEditorQuantity(q: Int) {
         val e = editor ?: return
-        editor = e.copy(quantity = q.coerceIn(1, 10))
+        editor = e.copy(quantity = q.coerceIn(1, 50))
     }
 
     fun closeEditor() {
