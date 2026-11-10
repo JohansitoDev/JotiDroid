@@ -28,12 +28,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -101,56 +104,65 @@ class TabItem(val label: String, val icon: ImageVector)
 @Composable
 fun PillTabBar(tabs: List<TabItem>, selected: Int, onSelect: (Int) -> Unit, modifier: Modifier = Modifier) {
     val extras = LocalTwinnExtras.current
-    Row(
-        modifier.fillMaxWidth().navigationBarsPadding().padding(start = 16.dp, end = 16.dp, top = 4.dp, bottom = 10.dp),
-        horizontalArrangement = Arrangement.spacedBy(10.dp),
-        verticalAlignment = Alignment.CenterVertically,
+    val scheme = MaterialTheme.colorScheme
+    Surface(
+        modifier = modifier.fillMaxWidth().navigationBarsPadding().padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(32.dp),
+        color = scheme.surfaceContainer.copy(alpha = if (extras.glassCards) 0.85f else 1f),
+        tonalElevation = 3.dp,
+        border = if (extras.outlines) BorderStroke(1.dp, scheme.outlineVariant.copy(alpha = 0.6f)) else null,
     ) {
-        tabs.forEachIndexed { i, tab ->
-            val isSel = i == selected
-            val weight by animateFloatAsState(
-                if (isSel) 2.2f else 1f,
-                spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMediumLow),
-                label = "tabWeight",
-            )
-            val bg by animateColorAsState(
-                if (isSel) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainer.copy(alpha = if (extras.glassCards) 0.75f else 1f),
-                label = "tabBg",
-            )
-            val fg by animateColorAsState(
-                if (isSel) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant,
-                label = "tabFg",
-            )
-            val press = remember { MutableInteractionSource() }
-            Box(
-                Modifier
-                    .weight(weight)
-                    .height(56.dp)
-                    .clip(RoundedCornerShape(28.dp))
-                    .background(bg)
-                    .then(
-                        if (extras.outlines || isSel) {
-                            Modifier.border(
-                                1.dp,
-                                if (isSel) MaterialTheme.colorScheme.primary.copy(alpha = 0.6f) else MaterialTheme.colorScheme.outlineVariant,
-                                RoundedCornerShape(28.dp),
-                            )
-                        } else Modifier,
-                    )
-                    .clickable(interactionSource = press, indication = androidx.compose.material3.ripple()) { onSelect(i) },
-                contentAlignment = Alignment.Center,
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    val scale by animateFloatAsState(if (isSel) 1.1f else 1f, label = "iconScale")
-                    Icon(tab.icon, tab.label, tint = fg, modifier = Modifier.graphicsLayer { scaleX = scale; scaleY = scale })
-                    AnimatedVisibility(
-                        visible = isSel,
-                        enter = fadeIn() + expandHorizontally(),
-                        exit = fadeOut() + shrinkHorizontally(),
+        Row(
+            Modifier.fillMaxWidth().padding(6.dp),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            tabs.forEachIndexed { i, tab ->
+                val isSel = i == selected
+                val weight by animateFloatAsState(
+                    if (isSel) 2.2f else 1f,
+                    spring(dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMediumLow),
+                    label = "tabWeight",
+                )
+                val bg by animateColorAsState(
+                    if (isSel) scheme.primaryContainer else Color.Transparent,
+                    label = "tabBg",
+                )
+                val fg by animateColorAsState(
+                    if (isSel) scheme.onPrimaryContainer else scheme.onSurfaceVariant,
+                    label = "tabFg",
+                )
+                val press = remember { MutableInteractionSource() }
+                Box(
+                    Modifier
+                        .weight(weight)
+                        .height(48.dp)
+                        .clip(RoundedCornerShape(26.dp))
+                        .background(bg)
+                        .then(
+                            if (isSel && extras.outlines) {
+                                Modifier.border(1.dp, scheme.primary.copy(alpha = 0.5f), RoundedCornerShape(26.dp))
+                            } else Modifier,
+                        )
+                        .clickable(interactionSource = press, indication = ripple()) { onSelect(i) },
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                        modifier = Modifier.padding(horizontal = 8.dp),
                     ) {
-                        Row {
-                            Spacer(Modifier.width(8.dp))
-                            Text(tab.label, color = fg, fontWeight = FontWeight.SemiBold, maxLines = 1)
+                        val scale by animateFloatAsState(if (isSel) 1.1f else 1f, label = "iconScale")
+                        Icon(tab.icon, tab.label, tint = fg, modifier = Modifier.size(22.dp).graphicsLayer { scaleX = scale; scaleY = scale })
+                        AnimatedVisibility(
+                            visible = isSel,
+                            enter = fadeIn() + expandHorizontally(),
+                            exit = fadeOut() + shrinkHorizontally(),
+                        ) {
+                            Row {
+                                Spacer(Modifier.width(6.dp))
+                                Text(tab.label, color = fg, fontWeight = FontWeight.SemiBold, maxLines = 1, style = MaterialTheme.typography.bodyMedium)
+                            }
                         }
                     }
                 }
