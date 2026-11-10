@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- English source strings. Translations live in values-*/strings.xml. -->
 <resources>
-    <string name="app_name" translatable="false">Twinnify</string>
+    <string name="app_name" translatable="false">JotiDroid</string>
     <string name="channel_updates">Clone updates</string>
     <string name="ok">OK</string>
     <string name="back">Back</string>

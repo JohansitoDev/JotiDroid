@@ -120,7 +120,7 @@
 
         <!-- Launcher entries: exactly one is enabled at a time (Appearance → App icon). -->
         <activity-alias
-            android:name=".LauncherTwinn"
+            android:name=".LauncherWhite"
             android:enabled="true"
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
@@ -132,7 +132,7 @@
             </intent-filter>
         </activity-alias>
         <activity-alias
-            android:name=".LauncherMidnight"
+            android:name=".LauncherBlack"
             android:enabled="false"
             android:exported="true"
             android:icon="@mipmap/ic_launcher_midnight"
@@ -143,127 +143,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
-        <activity-alias
-            android:name=".LauncherMint"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_mint"
-            android:roundIcon="@mipmap/ic_launcher_mint"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherOcean"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_ocean"
-            android:roundIcon="@mipmap/ic_launcher_ocean"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherSunset"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_sunset"
-            android:roundIcon="@mipmap/ic_launcher_sunset"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherRose"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_rose"
-            android:roundIcon="@mipmap/ic_launcher_rose"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherMono"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_mono"
-            android:roundIcon="@mipmap/ic_launcher_mono"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
 
-        <activity-alias
-            android:name=".LauncherLavender"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_lavender"
-            android:roundIcon="@mipmap/ic_launcher_lavender"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherCyberpunk"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_cyberpunk"
-            android:roundIcon="@mipmap/ic_launcher_cyberpunk"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherNord"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_nord"
-            android:roundIcon="@mipmap/ic_launcher_nord"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherDracula"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_dracula"
-            android:roundIcon="@mipmap/ic_launcher_dracula"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
-        <activity-alias
-            android:name=".LauncherMatcha"
-            android:enabled="false"
-            android:exported="true"
-            android:icon="@mipmap/ic_launcher_matcha"
-            android:roundIcon="@mipmap/ic_launcher_matcha"
-            android:targetActivity=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity-alias>
 
         <!-- Lets AppCompat remember the chosen app language on Android 12 and older -->
         <service
