@@ -38,6 +38,7 @@ import com.twinndroid.install.InstallResult
 import com.twinndroid.sandbox.Sandbox
 import com.twinndroid.sandbox.SandboxStatus
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -67,6 +68,7 @@ data class EditorState(
     val preview: ImageBitmap?,
     val tamper: TamperReport = TamperReport(TamperRisk.NONE, null, ""),
     val packageError: String? = null,
+    val quantity: Int = 1,
 )
 
 data class BuildState(
@@ -249,6 +251,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         updateConfig { it.copy(iconMode = IconMode.CUSTOM, customIconPath = file.path) }
     }
 
+    fun setEditorQuantity(q: Int) {
+        val e = editor ?: return
+        editor = e.copy(quantity = q.coerceIn(1, 10))
+    }
+
     fun closeEditor() {
         val e = editor
         if (e != null && e.isNew && e.config.sourceKind == SourceKind.FILE) {
@@ -260,55 +267,105 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun saveAndBuild() {
         val e = editor ?: return
-        val c = e.config.copy(label = e.config.label.trim(), clonePackage = e.config.clonePackage.trim())
+        val baseConfig = e.config.copy(label = e.config.label.trim(), clonePackage = e.config.clonePackage.trim())
         val err = when {
-            !PACKAGE_REGEX.matches(c.clonePackage) -> ctx.getString(R.string.err_package_invalid)
-            c.clonePackage == c.sourcePackage -> ctx.getString(R.string.err_package_same)
-            repo.clones.value.any { it.id != c.id && it.clonePackage == c.clonePackage } -> ctx.getString(R.string.err_package_used)
-            c.label.isEmpty() -> ctx.getString(R.string.err_name_empty)
+            !PACKAGE_REGEX.matches(baseConfig.clonePackage) -> ctx.getString(R.string.err_package_invalid)
+            baseConfig.clonePackage == baseConfig.sourcePackage -> ctx.getString(R.string.err_package_same)
+            repo.clones.value.any { it.id != baseConfig.id && it.clonePackage == baseConfig.clonePackage } -> ctx.getString(R.string.err_package_used)
+            baseConfig.label.isEmpty() -> ctx.getString(R.string.err_name_empty)
             else -> null
         }
         if (err != null) {
             editor = e.copy(packageError = err)
             return
         }
-        repo.upsert(c)
-        lastPreview = c.id to e.preview
+
+        val quantity = if (e.isNew) e.quantity else 1
+        val configs = mutableListOf<CloneConfig>()
+
+        if (quantity == 1) {
+            configs.add(baseConfig)
+        } else {
+            val usedPackages = repo.clones.value.map { it.clonePackage }.toSet()
+            val usedLabels = repo.clones.value.map { it.label }.toSet()
+
+            for (i in 0 until quantity) {
+                val id = if (i == 0) baseConfig.id else UUID.randomUUID().toString()
+                var pkg = if (i == 0) baseConfig.clonePackage else {
+                    var n = repo.clones.value.size + i + 2
+                    var candidate = "${baseConfig.sourcePackage}.twinn$n"
+                    while (candidate in usedPackages || CloneOperations.installedVersion(ctx, candidate) != null) {
+                        n++
+                        candidate = "${baseConfig.sourcePackage}.twinn$n"
+                    }
+                    candidate
+                }
+                var lbl = if (i == 0) baseConfig.label else {
+                    var n = i + 1
+                    var candidate = "${baseConfig.sourceLabel} $n"
+                    while (candidate in usedLabels) {
+                        n++
+                        candidate = "${baseConfig.sourceLabel} $n"
+                    }
+                    candidate
+                }
+
+                configs.add(
+                    baseConfig.copy(
+                        id = id,
+                        clonePackage = pkg,
+                        label = lbl,
+                        badgeText = (i + 1).toString(),
+                    )
+                )
+            }
+        }
+
+        configs.forEach { repo.upsert(it) }
+        lastPreview = baseConfig.id to e.preview
         editor = null
         tab = 0
         screen = Screen.Home
-        runBuild(c)
+
+        viewModelScope.launch {
+            for (config in configs) {
+                runBuildSuspend(config)
+                delay(800L)
+            }
+        }
     }
 
     fun rebuild(config: CloneConfig) = runBuild(config)
 
-    private fun runBuild(config: CloneConfig) {
+    private suspend fun runBuildSuspend(config: CloneConfig) {
         if (build?.running == true) return
         val icon = (editorPreviewFor(config) ?: clones.firstOrNull { it.config.id == config.id }?.icon)
         build = BuildState(config.clonePackage, config.label, icon, running = true, logs = listOf("Building ${config.label}…"), inSandbox = config.inSandbox)
-        viewModelScope.launch {
-            val result = try {
-                CloneOperations.buildAndInstall(ctx, config) { line ->
-                    viewModelScope.launch(Dispatchers.Main) {
-                        build?.let {
-                            val stage = when {
-                                line.startsWith("Patching") -> 1
-                                line.startsWith("Signing") -> 2
-                                line.startsWith("Installing") || line.startsWith("Waiting") -> 3
-                                else -> it.stage
-                            }
-                            build = it.copy(logs = it.logs + line, stage = maxOf(stage, it.stage))
+        val result = try {
+            CloneOperations.buildAndInstall(ctx, config) { line ->
+                viewModelScope.launch(Dispatchers.Main) {
+                    build?.let {
+                        val stage = when {
+                            line.startsWith("Patching") -> 1
+                            line.startsWith("Signing") -> 2
+                            line.startsWith("Installing") || line.startsWith("Waiting") -> 3
+                            else -> it.stage
                         }
+                        build = it.copy(logs = it.logs + line, stage = maxOf(stage, it.stage))
                     }
                 }
-            } catch (t: Throwable) {
-                InstallResult(false, t.message ?: t.javaClass.simpleName).also {
-                    build?.let { b -> build = b.copy(logs = b.logs + "✗ ${it.message}") }
-                }
             }
-            build?.let { build = it.copy(running = false, result = result, stage = if (result.success) 4 else it.stage) }
-            refreshClones()
+        } catch (t: Throwable) {
+            InstallResult(false, t.message ?: t.javaClass.simpleName).also {
+                build?.let { b -> build = b.copy(logs = b.logs + "✗ ${it.message}") }
+            }
         }
+        build?.let { build = it.copy(running = false, result = result, stage = if (result.success) 4 else it.stage) }
+        refreshClones()
+    }
+
+    private fun runBuild(config: CloneConfig) {
+        viewModelScope.launch { runBuildSuspend(config) }
     }
 
     private var lastPreview: Pair<String, ImageBitmap?>? = null

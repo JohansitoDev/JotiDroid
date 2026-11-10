@@ -154,6 +154,33 @@ fun EditorScreen(vm: MainViewModel) {
                 }
             }
 
+            if (state.isNew) {
+                TwinnCard {
+                    Column(Modifier.fillMaxWidth().padding(16.dp)) {
+                        Text("Cantidad de clones", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                        Spacer(Modifier.height(8.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                            Column(Modifier.weight(1f)) {
+                                Text("Instalar múltiples clones")
+                                Text("Crea e instala automáticamente la cantidad elegida para usar cuentas distintas.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            }
+                            Spacer(Modifier.width(12.dp))
+                            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                OutlinedButton(
+                                    onClick = { if (state.quantity > 1) vm.setEditorQuantity(state.quantity - 1) },
+                                    modifier = Modifier.size(40.dp),
+                                ) { Text("-") }
+                                Text("${state.quantity}", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                                OutlinedButton(
+                                    onClick = { if (state.quantity < 10) vm.setEditorQuantity(state.quantity + 1) },
+                                    modifier = Modifier.size(40.dp),
+                                ) { Text("+") }
+                            }
+                        }
+                    }
+                }
+            }
+
             if (state.tamper.risk != TamperRisk.NONE) {
                 val shield = state.tamper.risk == TamperRisk.SHIELD
                 TwinnCard(container = if (shield) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.surfaceContainerHigh) {
