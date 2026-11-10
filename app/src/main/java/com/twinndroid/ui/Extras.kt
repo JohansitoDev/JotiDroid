@@ -50,15 +50,15 @@ import com.twinndroid.data.AppUpdate
 import com.twinndroid.data.Languages
 import com.twinndroid.data.UpdateChecker
 
-const val CREATOR_GITHUB = "https://github.com/starlightjulie"
+const val CREATOR_GITHUB = "https://github.com/JohansitoDev"
 const val CREATOR_KOFI = "https://ko-fi.com/vvanadium"
-const val LICENSE_URL = "https://github.com/starlightjulie/TwinnDroid/blob/main/ADDITIONAL-TERMS.md"
+const val LICENSE_URL = "https://github.com/JohansitoDev/JotiDroid/blob/main/ADDITIONAL-TERMS.md"
 
 fun Context.openUrl(url: String) {
     runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
 }
 
-/** Small "Made by StarlightJulie · Ko-fi" line that sits above the tab bar. */
+/** Small "Made by JohansitoDev · Ko-fi" line that sits above the tab bar. */
 @Composable
 fun CreatorCredit(modifier: Modifier = Modifier) {
     val context = LocalContext.current
@@ -71,7 +71,7 @@ fun CreatorCredit(modifier: Modifier = Modifier) {
         Text(stringResource(R.string.credit_made_by), style = MaterialTheme.typography.labelSmall, color = dim)
         CreditLink(
             icon = { Icon(painterResource(R.drawable.ic_github), null, Modifier.size(13.dp), tint = dim) },
-            label = "StarlightJulie",
+            label = "JohansitoDev",
         ) { context.openUrl(CREATOR_GITHUB) }
         Text("·", style = MaterialTheme.typography.labelSmall, color = dim)
         CreditLink(

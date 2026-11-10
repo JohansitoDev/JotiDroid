@@ -243,7 +243,7 @@ fun SettingsScreen(vm: MainViewModel) {
                     OutlinedButton(onClick = { context.openUrl(CREATOR_GITHUB) }) {
                         Icon(painterResource(R.drawable.ic_github), null, Modifier.size(16.dp))
                         Spacer(Modifier.width(6.dp))
-                        Text("StarlightJulie")
+                        Text("JohansitoDev")
                     }
                     OutlinedButton(onClick = { context.openUrl(CREATOR_KOFI) }) {
                         Icon(Icons.Rounded.LocalCafe, null, Modifier.size(16.dp))

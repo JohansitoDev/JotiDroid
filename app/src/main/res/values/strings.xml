@@ -281,7 +281,7 @@
     <string name="aspect_header_start_desc">Left side of the header gradient</string>
     <string name="aspect_header_end">Header end</string>
     <string name="aspect_header_end_desc">Right side of the header gradient</string>
-    <string name="license_notice" translatable="false">© 2026 StarlightJulie. Free software under the GNU GPL v3 with additional terms, and comes with no warranty. Tap to read the license.</string>
+    <string name="license_notice" translatable="false">© 2026 JohansitoDev. Free software under the GNU GPL v3 with additional terms, and comes with no warranty. Tap to read the license.</string>
     <plurals name="clone_count">
         <item quantity="one">%d clone</item>
         <item quantity="other">%d clones</item>

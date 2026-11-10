@@ -18,7 +18,7 @@ data class AppUpdate(val version: String, val title: String, val notes: String)
  * and "Update now" always opens [LATEST_RELEASE_URL], never a link taken from the response.
  */
 object UpdateChecker {
-    const val REPO = "starlightjulie/TwinnDroid"
+    const val REPO = "JohansitoDev/JotiDroid"
     const val LATEST_RELEASE_URL = "https://github.com/$REPO/releases/latest"
     private const val API_URL = "https://api.github.com/repos/$REPO/releases/latest"
 
