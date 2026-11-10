@@ -188,6 +188,7 @@ data class ThemeConfig(
     val outlines: Boolean = true,
     /** Translucent cards that let the background animation show through. */
     val glassCards: Boolean = true,
+    val whiteBackground: Boolean = false,
     /** Switch the TwinnDroid launcher icon along with the theme preset. */
     val matchIcon: Boolean = false,
     val header: HeaderSettings = HeaderSettings(),

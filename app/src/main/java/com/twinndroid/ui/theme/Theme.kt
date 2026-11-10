@@ -4,6 +4,7 @@ import android.app.Activity
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -11,7 +12,6 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
@@ -44,32 +44,55 @@ private val TwinnType = Typography(
 
 @Composable
 fun TwinnTheme(config: ThemeConfig = ThemeConfig(), content: @Composable () -> Unit) {
-    val scheme = darkColorScheme(
-        background = Color.Black,
-        surface = Color.Black,
-        primary = Color(0xFF2962FF),
-        onPrimary = Color.White,
-        secondary = Color(0xFF00E676),
-        onSecondary = Color.Black,
-        tertiary = Color(0xFF00C853),
-        onTertiary = Color.White,
-        onBackground = Color.White,
-        onSurface = Color.White,
-        surfaceVariant = Color(0xFF1E1E1E),
-        onSurfaceVariant = Color(0xFFB0B0B0),
-        surfaceContainerLowest = Color.Black,
-        surfaceContainerLow = Color(0xFF101010),
-        surfaceContainer = Color(0xFF161616),
-        surfaceContainerHigh = Color(0xFF222222),
-        surfaceContainerHighest = Color(0xFF2D2D2D),
-        outline = Color(0xFF444444),
-        outlineVariant = Color(0xFF2E2E2E),
-    )
+    val isWhite = config.whiteBackground
+    val scheme = if (isWhite) {
+        lightColorScheme(
+            background = Color.White,
+            surface = Color.White,
+            primary = Color(0xFF2962FF),
+            onPrimary = Color.White,
+            secondary = Color(0xFF00C853),
+            onSecondary = Color.White,
+            onBackground = Color.Black,
+            onSurface = Color.Black,
+            surfaceVariant = Color(0xFFF0F0F0),
+            onSurfaceVariant = Color(0xFF555555),
+            surfaceContainerLowest = Color.White,
+            surfaceContainerLow = Color(0xFFFAFAFA),
+            surfaceContainer = Color(0xFFF2F2F2),
+            surfaceContainerHigh = Color(0xFFE8E8E8),
+            surfaceContainerHighest = Color(0xFFDDDDDD),
+            outline = Color(0xFFCCCCCC),
+            outlineVariant = Color(0xFFE0E0E0),
+        )
+    } else {
+        darkColorScheme(
+            background = Color.Black,
+            surface = Color.Black,
+            primary = Color(0xFF2962FF),
+            onPrimary = Color.White,
+            secondary = Color(0xFF00E676),
+            onSecondary = Color.Black,
+            tertiary = Color(0xFF00C853),
+            onTertiary = Color.White,
+            onBackground = Color.White,
+            onSurface = Color.White,
+            surfaceVariant = Color(0xFF1E1E1E),
+            onSurfaceVariant = Color(0xFFB0B0B0),
+            surfaceContainerLowest = Color.Black,
+            surfaceContainerLow = Color(0xFF101010),
+            surfaceContainer = Color(0xFF161616),
+            surfaceContainerHigh = Color(0xFF222222),
+            surfaceContainerHighest = Color(0xFF2D2D2D),
+            outline = Color(0xFF444444),
+            outlineVariant = Color(0xFF2E2E2E),
+        )
+    }
 
     val extras = TwinnExtras(
-        headerBrush = Brush.linearGradient(listOf(Color(0xFF121212), Color(0xFF1E1E1E))),
-        headerStart = Color(0xFF121212),
-        headerEnd = Color(0xFF1E1E1E),
+        headerBrush = Brush.linearGradient(if (isWhite) listOf(Color(0xFFE0E0E0), Color(0xFFF5F5F5)) else listOf(Color(0xFF121212), Color(0xFF1E1E1E))),
+        headerStart = if (isWhite) Color(0xFFE0E0E0) else Color(0xFF121212),
+        headerEnd = if (isWhite) Color(0xFFF5F5F5) else Color(0xFF1E1E1E),
         background = BgAnimation.NONE,
         parallax = false,
         outlines = true,
@@ -82,8 +105,8 @@ fun TwinnTheme(config: ThemeConfig = ThemeConfig(), content: @Composable () -> U
         SideEffect {
             val window = (view.context as? Activity)?.window ?: return@SideEffect
             WindowCompat.getInsetsController(window, view).apply {
-                isAppearanceLightStatusBars = false
-                isAppearanceLightNavigationBars = false
+                isAppearanceLightStatusBars = isWhite
+                isAppearanceLightNavigationBars = isWhite
             }
         }
     }
