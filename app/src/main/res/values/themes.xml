@@ -1,0 +1,16 @@
+<resources>
+    <style name="Theme.TwinnDroid" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/twinn_bg</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- For the sandbox's background helpers, which must never draw anything -->
+    <style name="Theme.TwinnDroid.Invisible" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+</resources>
