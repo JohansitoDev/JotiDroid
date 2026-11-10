@@ -1,6 +1,6 @@
-# Documento de Requerimientos y Funcionalidades — Twinnify
+# Documento de Requerimientos y Funcionalidades — JotiDroid
 
-Este documento detalla todas las características, módulos y funcionalidades implementadas en la aplicación **Twinnify** (anteriormente TwinnDroid), una potente herramienta sin root para clonar, aislar, extraer y personalizar aplicaciones en Android.
+Este documento detalla todas las características, módulos y funcionalidades implementadas en la aplicación **JotiDroid** (anteriormente JotiDroid), una potente herramienta sin root para clonar, aislar, extraer y personalizar aplicaciones en Android.
 
 ---
 
@@ -61,7 +61,7 @@ Crea y gestiona un perfil de trabajo separado en el dispositivo mediante las API
   - Excepción inteligente: no se congela si hay audio reproduciéndose en segundo plano.
   - Atajos de pantalla de inicio para congelar todas las apps del sandbox de un toque.
 - **Intercambio de Archivos y Utilidades:**
-  - Envío de archivos hacia el interior del sandbox (`Send files in`) y extracción hacia el teléfono (`Bring files out`) utilizando la carpeta `Download/Twinnify`.
+  - Envío de archivos hacia el interior del sandbox (`Send files in`) y extracción hacia el teléfono (`Bring files out`) utilizando la carpeta `Download/JotiDroid`.
   - Stub de pago NFC (`NFC payment stub`) para permitir el funcionamiento de apps de pago contactless dentro del sandbox.
   - Reseteo de datos de apps en sandbox y desinstalación controlada.
 
@@ -86,7 +86,7 @@ Crea y gestiona un perfil de trabajo separado en el dispositivo mediante las API
   - Notificaciones al usuario ante nuevas versiones.
 - **Auto-actualización en Segundo Plano:**
   - Reconstrucción y reinstalación silenciosa de clones (requiere Shizuku).
-- **Actualizaciones de Twinnify:**
+- **Actualizaciones de JotiDroid:**
   - Verificación de nuevas versiones de la propia aplicación a través de GitHub.
 
 ---
@@ -120,7 +120,7 @@ Ofrece un sistema de personalización visual altamente avanzado e inmersivo.
 - **Tamaño de Texto y Accesibilidad:**
   - Escalado personalizado del texto respecto al sistema.
 - **Selector de Icono de la App:**
-  - Cambio dinámico del icono principal de Twinnify en el cajón de aplicaciones mediante alias de actividades.
+  - Cambio dinámico del icono principal de JotiDroid en el cajón de aplicaciones mediante alias de actividades.
 
 ---
 

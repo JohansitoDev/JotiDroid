@@ -1,17 +1,17 @@
 # Changelog
 
-Everything that's changed in TwinnDroid, newest first. You can grab any version's APK from the [Releases](../../releases) page.
+Everything that's changed in JotiDroid, newest first. You can grab any version's APK from the [Releases](../../releases) page.
 
 ## 2.1.0
 
 - **My themes.** There's a new **My themes** page under Match app icon in Appearance, with drop-downs for custom colours, background & effects, text size and the home header. Set it all up how you like, save it under a name, and switch between your saved themes with one tap. Everything's still in the Appearance menu too.
 - **Fixed the old theme colour sticking around** behind everything when you changed themes with the background animation off.
-- **Fixed clones of some apps getting the wrong icon.** Signal's clone showed one of its welcome pictures instead of its icon and badge, because TwinnDroid's icon could end up sharing an ID with an image from the app's split files. Clones built before this need a rebuild to pick up the fix.
+- **Fixed clones of some apps getting the wrong icon.** Signal's clone showed one of its welcome pictures instead of its icon and badge, because JotiDroid's icon could end up sharing an ID with an image from the app's split files. Clones built before this need a rebuild to pick up the fix.
 - Everything new is translated into all 23 languages.
 
 ## 2.0.0
 
-- **The Sandbox is here.** A new tab sets up a separate space on your phone where apps get their own storage, accounts and contacts, and can't see anything outside it. Android keeps it apart, not TwinnDroid, and it doesn't need root.
+- **The Sandbox is here.** A new tab sets up a separate space on your phone where apps get their own storage, accounts and contacts, and can't see anything outside it. Android keeps it apart, not JotiDroid, and it doesn't need root.
 - **Apps that wouldn't clone now run.** The sandbox runs apps unchanged, so games like Clash Royale that crash as clones work fine in there. These apps get one copy in the sandbox, on top of your normal install. The warning in the clone editor now has an **Add original to sandbox** button that puts it there in one tap.
 - **As many copies as you want of apps that can be cloned.** Put the original and any number of clones of an app in the sandbox, each with its own login. If you're coming from Shelter, that's the big difference, and everything else Shelter does is in here too: freezing, auto-freeze on lock, unfreeze-and-launch shortcuts, moving files across, widgets and the NFC payment stub.
 - **Hardened clones.** The clone editor has a new **Sandbox and isolation** section. A clone can get its own signing key, lose sight of other apps, stop other apps reaching it, and lose shared storage, backups, the ad ID, start at boot or internet. It works on any phone, and Android enforces all of it.
@@ -21,14 +21,14 @@ Everything that's changed in TwinnDroid, newest first. You can grab any version'
 
 ## 1.1.5
 
-- **TwinnDroid speaks 23 languages.** Pick one from the new **Settings → Language** menu. That covers the 20 most spoken languages in the world (English, Mandarin, Hindi, Spanish, French, Arabic, Bengali, Portuguese, Russian, Urdu, Indonesian, German, Japanese, Nigerian Pidgin, Egyptian Arabic, Marathi, Telugu, Turkish, Tamil and Cantonese) plus Italian, Vietnamese and Korean. Arabic and Urdu flip the whole layout right to left. It only changes TwinnDroid, not your clones. Some translations might be a bit off, so fixes are very welcome.
-- **Update pop-up.** When a new version is out, TwinnDroid tells you when you open it, with the version and what's new. **Update now** opens the latest release here on GitHub. You can turn this off or check by hand in **Settings → Updates**.
-- **Official build check.** **Settings → About** now shows whether your copy is an official build signed with my key. TwinnDroid is only officially available from this GitHub page for now, so if it says unofficial, it came from somewhere else.
-- **New license.** TwinnDroid is now under the GNU GPL v3 with a few extra terms: forks have to stay open source, keep the credit, say they're modified, and use their own name and icon. 1.1.4 and older stay under MIT.
+- **JotiDroid speaks 23 languages.** Pick one from the new **Settings → Language** menu. That covers the 20 most spoken languages in the world (English, Mandarin, Hindi, Spanish, French, Arabic, Bengali, Portuguese, Russian, Urdu, Indonesian, German, Japanese, Nigerian Pidgin, Egyptian Arabic, Marathi, Telugu, Turkish, Tamil and Cantonese) plus Italian, Vietnamese and Korean. Arabic and Urdu flip the whole layout right to left. It only changes JotiDroid, not your clones. Some translations might be a bit off, so fixes are very welcome.
+- **Update pop-up.** When a new version is out, JotiDroid tells you when you open it, with the version and what's new. **Update now** opens the latest release here on GitHub. You can turn this off or check by hand in **Settings → Updates**.
+- **Official build check.** **Settings → About** now shows whether your copy is an official build signed with my key. JotiDroid is only officially available from this GitHub page for now, so if it says unofficial, it came from somewhere else.
+- **New license.** JotiDroid is now under the GNU GPL v3 with a few extra terms: forks have to stay open source, keep the credit, say they're modified, and use their own name and icon. 1.1.4 and older stay under MIT.
 
 ## 1.1.4
 
-- **Fixed clones getting stuck on "grant file access".** Managers and patchers ask for All files access or Install unknown apps, but their "Open settings" button took you to the original app's page, so the clone could never get it. TwinnDroid now flags any clone that's missing one of these ("Needs … · tap to grant") and lets you grant it in one tap with Shizuku, or opens the clone's own Settings page instead.
+- **Fixed clones getting stuck on "grant file access".** Managers and patchers ask for All files access or Install unknown apps, but their "Open settings" button took you to the original app's page, so the clone could never get it. JotiDroid now flags any clone that's missing one of these ("Needs … · tap to grant") and lets you grant it in one tap with Shizuku, or opens the clone's own Settings page instead.
 - Added **Special access** to each clone's ⋮ menu so you can check and change these any time.
 - Tested with Revenge Manager, Shiggy Manager and Morphe.
 
